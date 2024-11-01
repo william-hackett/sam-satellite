@@ -36,7 +36,7 @@ container.appendChild(renderer.domElement) // add the renderer to html div
 /////////////////////////////////////////////////////////////////////////
 ///// CAMERAS CONFIG
 const camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 1, 100)
-camera.position.set(34,16,-20)
+camera.position.set(26,4,-35)
 scene.add(camera)
 
 /////////////////////////////////////////////////////////////////////////
@@ -66,27 +66,18 @@ scene.add(sunLight)
 
 /////////////////////////////////////////////////////////////////////////
 ///// LOADING GLB/GLTF MODEL FROM BLENDER
-loader.load('models/gltf/starter-scene.glb', function (gltf) {
-
+loader.load('models/gltf/SATGUS_PATCH.glb', function (gltf) {
+    gltf.scene.scale.set(65,65,65)
     scene.add(gltf.scene)
 })
 
 /////////////////////////////////////////////////////////////////////////
 //// INTRO CAMERA ANIMATION USING TWEEN
 function introAnimation() {
-    controls.enabled = false //disable orbit controls to animate the camera
+    controls.enabled = true //disable orbit controls to animate the camera
     
-    new TWEEN.Tween(camera.position.set(26,4,-35 )).to({ // from camera position
-        x: 16, //desired x position to go
-        y: 50, //desired y position to go
-        z: -0.1 //desired z position to go
-    }, 6500) // time take to animate
-    .delay(1000).easing(TWEEN.Easing.Quartic.InOut).start() // define delay, easing
-    .onComplete(function () { //on finish animation
-        controls.enabled = true //enable orbit controls
-        setOrbitControlsLimits() //enable controls limits
-        TWEEN.remove(this) // remove the animation from memory
-    })
+    new TWEEN.Tween(camera.position.set(26,4,-35))
+    setOrbitControlsLimits()
 }
 
 introAnimation() // call intro animation on start
